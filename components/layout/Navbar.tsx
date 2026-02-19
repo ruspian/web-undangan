@@ -10,7 +10,6 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
-        {/* logo */}
         <Link
           href="/"
           className="text-2xl font-bold text-gray-900 tracking-tight"
@@ -18,7 +17,6 @@ export default function Navbar() {
           Nex<span className="text-blue-600">Invite</span>
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
           <Link
             href="/templates"
@@ -40,7 +38,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Action Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <Link
             href="/login"
@@ -56,9 +53,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Menu */}
         <button
-          onClick={toggleMobileMenu} // Panggil fungsi Zustand pas diklik
+          onClick={toggleMobileMenu}
           className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-transform"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -89,7 +85,6 @@ export default function Navbar() {
             Harga
           </Link>
           <div className="h-px w-full bg-gray-100 my-2"></div>{" "}
-          {/* Garis pembatas */}
           <Link
             href="/login"
             onClick={closeMobileMenu}
