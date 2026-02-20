@@ -1,7 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Lock } from "lucide-react";
+import { useActionState, useEffect } from "react";
+import { LoginAction } from "@/actions/login";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function LoginPage() {
+  const [state, formAction, isPending] = useActionState(LoginAction, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.message && !state.success) {
+      toast.error(state.message);
+      return;
+    }
+
+    if (state?.success) {
+      toast.success(state.message);
+      router.push("/");
+    }
+  }, [state, router]);
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 p-8 shadow-xl border border-gray-100 rounded-xl bg-white">
@@ -14,7 +34,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" action="#" method="POST">
+        <form className="mt-8 space-y-6" action={formAction}>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -26,6 +46,7 @@ export default function LoginPage() {
                 </div>
                 <input
                   type="email"
+                  name="email"
                   required
                   className="block w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
                   placeholder="nama@email.com"
@@ -43,6 +64,7 @@ export default function LoginPage() {
                 </div>
                 <input
                   type="password"
+                  name="password"
                   required
                   className="block w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
                   placeholder="••••••••"
@@ -53,9 +75,10 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
+            className="flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={isPending}
           >
-            Masuk
+            {isPending ? "Tunggu..." : "Masuk"}
           </button>
         </form>
 

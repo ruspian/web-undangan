@@ -1,6 +1,6 @@
 "use server";
 
-import { registerSchema } from "@/schemas/register";
+import { RegisterSchema } from "./../schemas/register";
 import { prisma } from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
 import { Prisma } from "@prisma/client";
@@ -9,9 +9,9 @@ import { RegisterState } from "@/types/register";
 export const RegisterAction = async (
   prevData: RegisterState,
   formData: FormData,
-) => {
+): Promise<RegisterState> => {
   try {
-    const validated = registerSchema.safeParse(Object.fromEntries(formData));
+    const validated = RegisterSchema.safeParse(Object.fromEntries(formData));
 
     if (!validated.success) {
       return {
@@ -37,7 +37,7 @@ export const RegisterAction = async (
 
     const hashedPassword = await bcryptjs.hash(password, 12);
 
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         name,
         email,
@@ -47,7 +47,6 @@ export const RegisterAction = async (
 
     return {
       success: true,
-      data: user,
       message: "Akun berhasil dibuat, silahkan login!",
     };
   } catch (error) {
