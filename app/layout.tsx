@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Inter,
+  Playfair_Display,
+  Pinyon_Script,
+  Geist,
+  Geist_Mono,
+} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { Toaster } from "sonner";
@@ -12,6 +18,17 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+const pinyon = Pinyon_Script({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-pinyon",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${playfair.variable} ${pinyon.variable} font-sans antialiased bg-gray-100`}
       >
         <Navbar />
         <main className="min-h-screen bg-gray-50/50">{children}</main>

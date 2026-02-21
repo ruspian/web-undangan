@@ -20,7 +20,7 @@ model User {
   updatedAt DateTime @updatedAt
   password  String
 
-  // Relasi: Satu user bisa punya satu undangan 
+  // Satu user bisa punya satu undangan 
   invitation Invitation?
 }
 
